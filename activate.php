@@ -26,14 +26,10 @@ class tokenize
 		$res = curl_exec($curl);
 		curl_close($curl);
 		$arr = json_decode($res, true);
-		if(empty($arr)){
-			return "error";
+		if(strpos($res, 'error') == true){
+			return $error = 1;
 		}else{
-			if(in_array("error_code", $arr)){
-				return "error";
-			}else{
-				return json_decode($res, true);
-			}
+			return json_decode($res, true);
 		}
 	}
 }
@@ -98,22 +94,21 @@ if(isset($_POST['submit']))
 	}else{
 		if (empty($password)) {
 			$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
-				header("Location: index.php");
+			header("Location: index.php");
 		}else{
-			try{
-				$t = new tokenize($username, $password);
-				$a = new activate($username, $password, $active);
-				$t->generate();
+			$t = new tokenize($username, $password);
+			$t->generate();
+			if($t->generate($error) === 1){
+				$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
+				header("Location: index.php");
+			}else{
+				$a =  new activate($username, $password, $active);
 				$a->request();
 
-				header("Location: index.php");
-			}catch(ERROR $e){
-				$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
 				header("Location: index.php");
 			}
 		}
 	}
-	
 }
 
 ?>
