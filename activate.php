@@ -27,7 +27,7 @@ class tokenize
 		curl_close($curl);
 		$arr = json_decode($res, true);
 		if(strpos($res, 'error') == true){
-			return $error = 1;
+			throw new Exception('Error!');
 		}else{
 			return json_decode($res, true);
 		}
@@ -64,21 +64,14 @@ class activate extends tokenize
 		curl_close($curl);
 
 		$arr = json_decode($resp, true);
-		if(empty($arr)){
-			return "error";
+
+		if($this->active === "true")
+		{
+			$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>";		
+		}elseif($this->active === "false"){
+			$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
 		}else{
-			if(in_array("error", $arr)){ 
-			 	return "error";
-			}else{
-				if($this->active === "true")
-				{
-					$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>";		
-				}elseif($this->active === "false"){
-					$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
-				}else{
-					$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong>Error Please Try Again.</div>";
-				}
-			}
+			$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong>Error Please Try Again.</div>";
 		}
 	}
 }
@@ -96,15 +89,15 @@ if(isset($_POST['submit']))
 			$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
 			header("Location: index.php");
 		}else{
-			$t = new tokenize($username, $password);
-			$t->generate();
-			if($t->generate($error) === 1){
-				$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
-				header("Location: index.php");
-			}else{
+			try {
+				$t = new tokenize($username, $password);
 				$a =  new activate($username, $password, $active);
+				$t->generate();
 				$a->request();
 
+				header("Location: index.php");
+			}catch(Exception $e){
+				$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
 				header("Location: index.php");
 			}
 		}
