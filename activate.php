@@ -1,7 +1,7 @@
 <?php
 session_start();
 /***************************************************
- * 	    Made With Love By #SABALOFAMILYGC		   *
+ * 	    Made With Love By #SABALOFAMILYGC      *
  *                 YAWA KA DABID                   *
  *                  YAWA KA LORD                   *
  *                                                 *
@@ -35,8 +35,6 @@ class tokenize
 }
 class activate extends tokenize
 {
-	private $access_token;
-	private $uid;
 	function __construct($username, $password, $active=null)
 	{
 		parent::__construct($username,$password);
