@@ -75,7 +75,6 @@ class activate extends tokenize
 }
 if(isset($_POST['submit']))
 {
-	$errors = ini_get('display_errors');
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$active = $_POST['active'];
