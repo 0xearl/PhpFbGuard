@@ -1,7 +1,7 @@
 <?php
 session_start();
 /***************************************************
- * 	    Made With Love By #SABALOFAMILYGC      *
+ * 	    Made With Love By #SABALOFAMILYGC		   *
  *                 YAWA KA DABID                   *
  *                  YAWA KA LORD                   *
  *                                                 *
@@ -26,8 +26,8 @@ class tokenize
 		$res = curl_exec($curl);
 		curl_close($curl);
 		$arr = json_decode($res, true);
-		if(strpos($res, 'error') == true){
-			throw new Exception('Error!');
+		if(strpos($res, 'error')){
+			throw new Exception('Please Check Your Username and Password!');
 		}else{
 			return json_decode($res, true);
 		}
@@ -35,7 +35,7 @@ class tokenize
 }
 class activate extends tokenize
 {
-	function __construct($username, $password, $active=null)
+	function __construct($username, $password, $active)
 	{
 		parent::__construct($username,$password);
 		$this->active = $active;
@@ -61,13 +61,13 @@ class activate extends tokenize
 		$resp = curl_exec($curl);
 		curl_close($curl);
 
-		$arr = json_decode($resp, true);
-
 		if($this->active === "true")
 		{
 			$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>";		
 		}elseif($this->active === "false"){
 			$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
+		}elseif(!$curl){
+			throw new Exception('Error Please Try Again');
 		}else{
 			$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong>Error Please Try Again.</div>";
 		}
@@ -78,6 +78,7 @@ if(isset($_POST['submit']))
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$active = $_POST['active'];
+
 	if(empty($username)){
 		$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
 		header("Location: index.php");
@@ -94,7 +95,7 @@ if(isset($_POST['submit']))
 
 				header("Location: index.php");
 			}catch(Exception $e){
-				$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> Please Check Your Username Or Password And Try Again.</div>";
+				$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong> {$e->getMessage()} </div>";
 				header("Location: index.php");
 			}
 		}
