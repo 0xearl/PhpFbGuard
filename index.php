@@ -14,7 +14,7 @@ error_reporting(0);
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">#SABALOFAMILYGC</a>
+  <a class="navbar-brand" href="#">#FacebookShield</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -31,15 +31,17 @@ error_reporting(0);
   </div>
 </nav>
 <?php
-if(isset($_SESSION['msg'])){
-	header("Refresh: 10;");
-}
+
 echo $_SESSION['msg']; unset($_SESSION['msg']);
 
 ?>
 <div class='container'>
 <br>
 <center><h1>Profile Guard Enabler</h1></center>
+<div class="info p-2 m-auto text-center">
+  <p class="font-weight-bold text-muted">First try may not work. if it wont work please check your facebook account if it's temporarily locked, and confirm the unknown device that it was you. And Try again.
+</p>
+</div>
 <form method="POST" action="activate.php">
   <div class="form-group">
     <label for="username">Username</label>
@@ -60,5 +62,13 @@ echo $_SESSION['msg']; unset($_SESSION['msg']);
 <button class="btn btn-primary btn-block" name="submit">Submit</button>
 </form>
 </div>
+<style>
+.info {
+  width: 50%;
+  height: 100px;
+  background-color: #f4f7f2;
+}
+
+</style>
 </body>
 </html>
