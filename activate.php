@@ -1,12 +1,5 @@
 <?php
 session_start();
-/***************************************************
- * 	    Made With Love By #SABALOFAMILYGC		   *
- *                 YAWA KA DABID                   *
- *                  YAWA KA LORD                   *
- *                                                 *
- *                                                 *
- ***************************************************/
 class tokenize
 {
 	private $username;
