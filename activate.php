@@ -1,19 +1,22 @@
 <?php
 session_start();
-class tokenize
+class FbShield
 {
-	private $username;
-	private $password;
-	function __construct($username, $password)
-	{
-		$this->username = $username;
-		$this->password = $password;
-	}
-	function token(){
-		return $this->generate();
-	}
-	function generate(){
-		$curl = curl_init();
+    protected $username;
+    protected $password;
+    
+    function __construct($username, $password, $active){
+        $this->username = $username;
+        $this->password = $password;
+        $this->active = $active;
+    }
+
+    function token(){
+        return $this->generate();
+    }
+
+    function generate(){
+        $curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_URL, 'https://b-api.facebook.com/method/auth.login?access_token=237759909591655%25257C0f140aabedfb65ac27a739ed1a2263b1&format=json&sdk_version=2&email='.$this->username.'&locale=en_US&password='.$this->password.'&sdk=ios&generate_session_cookies=1&sig=3f555f99fb61fcd7aa0c44f58f522ef6');
 		$res = curl_exec($curl);
@@ -24,26 +27,16 @@ class tokenize
 		}else{
 			return json_decode($res, true);
 		}
-	}
-}
-class activate extends tokenize
-{
-	function __construct($username, $password, $active)
+    }
+    function data(){
+        return 'variables={"0":{"is_shielded":'.$this->active.',"session_id":"9b78191c-84fd-4ab6-b0aa-19b39f04a6bc","actor_id":'.$this->token()['uid'].',"client_mutation_id":"b0316dd6-3fd6-4beb-aed4-bb29c5dc64b0"}}&method=post&doc_id=1477043292367183&query_name=IsShieldedSetMutation&strip_defaults=true&strip_nulls=true&locale=en_US&client_country_code=US&fb_api_req_friendly_name=IsShieldedSetMutation&fb_api_caller_class=IsShieldedSetMutation';
+    }
+    function headers()
 	{
-		parent::__construct($username,$password);
-		$this->active = $active;
-
-	}
-	function data()
-	{
-		return 'variables={"0":{"is_shielded":'.$this->active.',"session_id":"9b78191c-84fd-4ab6-b0aa-19b39f04a6bc","actor_id":'.parent::token()['uid'].',"client_mutation_id":"b0316dd6-3fd6-4beb-aed4-bb29c5dc64b0"}}&method=post&doc_id=1477043292367183&query_name=IsShieldedSetMutation&strip_defaults=true&strip_nulls=true&locale=en_US&client_country_code=US&fb_api_req_friendly_name=IsShieldedSetMutation&fb_api_caller_class=IsShieldedSetMutation';
-	}
-	function headers()
-	{
-		$header = array('Content-Type: application/x-www-form-urlencoded', 'Authorization: OAuth '.parent::token()['access_token'].'');
+		$header = array('Content-Type: application/x-www-form-urlencoded', 'Authorization: OAuth '.$this->token()['access_token'].'');
 		return $header;
-	}
-	function request()
+    }
+    function request()
 	{
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, 'https://graph.facebook.com/graphql');
@@ -75,10 +68,8 @@ if(isset($_POST['submit']))
 			header("Location: index.php");
 		}else{
 			try {
-				$t = new tokenize($username, $password);
-				$a =  new activate($username, $password, $active);
-				$t->generate();
-				$a->request();
+                $activateSheild = new FbShield($username, $password, $active);
+                $activateSheild->request();
 
 				header("Location: index.php");
 			}catch(Exception $e){
