@@ -54,15 +54,9 @@ class activate extends tokenize
 		$resp = curl_exec($curl);
 		curl_close($curl);
 
-		if($this->active === "true")
-		{
-			$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>";		
-		}elseif($this->active === "false"){
-			$_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
-		}elseif(!$curl){
-			throw new Exception('Error Please Try Again');
-		}else{
-			$_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"><strong>Error!</strong>Error Please Try Again.</div>";
+		return ($this->active === "true") ? $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>" : $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
+		if(!$curl){
+			throw new Exception('Unknown error occured, Please Try Again.');
 		}
 	}
 }
