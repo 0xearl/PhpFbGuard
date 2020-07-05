@@ -45,11 +45,13 @@ class FbShield
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$resp = curl_exec($curl);
 		curl_close($curl);
-
-		return ($this->active === "true") ? $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>" : $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
-		if(!$curl){
+        
+        if(!$curl){
 			throw new Exception('Unknown error occured, Please Try Again.');
 		}
+        
+		return ($this->active === "true") ? $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Enabled!.</div>" : $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\"><strong>Congratulations!</strong> Profile Guard Has Been Disabled!.</div> ";
+		
 	}
 }
 if(isset($_POST['submit']))
