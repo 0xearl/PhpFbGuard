@@ -51,7 +51,7 @@ echo $_SESSION['msg']; unset($_SESSION['msg']);
   </p>
   <hr>
   <p class="font-weight-bold text-white">
-  Accunts with 2auth enabled wont work.<br>
+  Accounts with 2auth enabled wont work.<br>
   To make this work please consider turning 2auth off and on after.
   </p>
 </div>
