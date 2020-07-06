@@ -7,8 +7,8 @@ error_reporting(0);
 <html>
 <head>
 	<title>Facebook Profile Guard</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="shieldicon.png">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="icon" type="image/png" href="shieldicon.png">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -42,12 +42,21 @@ echo $_SESSION['msg']; unset($_SESSION['msg']);
 <img src="shieldicon.png" alt="Profile Guard" style="width: 200px; height: 200px">
 <h1>Profile Guard Enabler</h1>
 </center>
-<div class="w-50 bg-info p-3 m-auto text-center">
-  <p class="font-weight-bold text-white">First try may not work. if it wont work please check your facebook account if it's temporarily locked, and confirm the unknown device that it was you. And Try again.
-</p>
+<div class="w-75 bg-info p-3 m-auto text-center">
+  <p class='display-4 font-weight-bold text-white'>FAQ</p>
+  <p class="font-weight-bold text-white">
+  First try may not work.<br>
+  To fix this problem login into your device (mobile/computer)
+  and confirm the request.
+  </p>
+  <hr>
+  <p class="font-weight-bold text-white">
+  Accunts with 2auth enabled wont work.<br>
+  To make this work please consider turning 2auth off and on after.
+  </p>
 </div>
-<form method="POST" action="shield.php">
-  <div class="form-group">
+<form method="POST" action="shield.php" class="m-2 p-2 m-sm-5">
+  <div class="form-group ">
     <label for="username">Username</label>
     <input type="text" class="form-control" id="username" name="username" placeholder="Username">
   </div>
@@ -55,19 +64,19 @@ echo $_SESSION['msg']; unset($_SESSION['msg']);
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
   </div>
-<div class="form-group">
+  <div class="form-group">
       <label for="select">Action</label>
       <select id="select" class="form-control" name="active">
         <option value="true">Enable</option>
         <option value="false">Disable</option>
       </select>
-    </div>
-<Br>
-<button class="btn btn-primary btn-block" name="submit">Submit</button>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" name="submit">Submit</button>
+  </div>
+
 </form>
 </div>
-<br>
-<br>
-<br>
+
 </body>
 </html>
