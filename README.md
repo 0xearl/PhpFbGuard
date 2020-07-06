@@ -1,10 +1,9 @@
 <img src="shieldicon.png" alt="Profile Guard" width="200px" height="200px">
 
 # PhpFbGuard
-I had nothing to do so me and my friends find something to do, and when one of my friend,
-found an interesting python script that enables <a href="https://www.facebook.com/help/756130824560105">Facebook Profile Guard</a> feature
-and i decided it'd be fun to translate it into php to see how much i can understand python
-
+PhpFbGuard is a web app that forces to enable the Facebook profile picture guard feature.
+<br>
+To know more about the feature please <a href="https://www.diyphotography.net/facebook-tests-profile-picture-guard-feature-prevents-profile-photo-stolen/">click here</a>
 <hr>
 <a href="https://github.com/jaxBCD/FBshield">Creator Of The Original Script</a>
 <hr>
